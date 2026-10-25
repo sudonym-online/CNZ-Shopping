@@ -8,7 +8,6 @@ from apis.serp_api import get_serp_image_url
 
 
 load_dotenv()
-print(f"OPENAI_API_KEY: {os.getenv('OPENAI_API_KEY')}")
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
