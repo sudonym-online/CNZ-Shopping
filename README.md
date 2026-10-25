@@ -2,12 +2,13 @@
 
 A Flask web app that uses AI to help people choose products: a guided chatbot, a side-by-side comparison tool, and an event shopping list.
 
-**Live demo:** [paste link] · **Demo video:** [paste link]
+**Demo video:** [paste link]
 
 [Screenshot or GIF: paste here]
 
-This is a team project by Cedric Hernandez, Nicholas Mathew, Zed Bradley, and cesar-val1908 (GitHub username).
-**My part:** [describe the features you built]
+Built in the Code2College AI program (June to December 2025) by Nicholas, Cedric, and Zed, with contributions from cesar-val1908. It won the Audience Choice award at Code2College's AI Demo Day 2025.
+
+**My part:** I built the front end for all three pages (`static/*.js`, `templates/`, `static/styles/`), the chatbot's backend and function calling (`chatbot.py`), and most of the Flask routes in `main.py`. Cedric wrote the comparison prompts and `Compare.py`. Zed built the shopping list backend (`shopping_list.py`) and the SerpAPI helpers.
 
 ## What it does
 
@@ -57,8 +58,12 @@ To use Docker instead, create the same `.env` file and run `docker compose up --
 
 ## What I learned
 
-[Write this part in your own words.]
+- **Getting structured output from a language model.** Plain text answers were hard to turn into buttons and sliders. Function calling lets GPT-4o pick a question type and fill in its fields, and the front end draws the matching control.
+- **Models don't always follow the format.** Sometimes the model writes the function call as plain text instead. `chatbot.py` has a fallback that reads that text and converts it to the expected format. If that also fails, it shows the model's text as an open question with a note to try again.
+- **Working on a team in Git.** We merged our work through pull requests on a shared repo, with the front end and the backend changing at the same time.
 
 ## What I would improve next
 
-[Write this part in your own words.]
+- Add automated tests for the Flask routes and the response parsing.
+- Show where each price comes from, since prices from an AI model can be out of date.
+- Remove code that the app doesn't use (the review summary and sentiment helpers in `apis/`).
