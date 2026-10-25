@@ -1,9 +1,4 @@
-@font-face {
-    font-family: "SF Pro Display";
-    src: url("./fonts/sf-pro-display/SFPRODISPLAYREGULAR.OTF") format("opentype");
-    font-weight: normal;
-    font-style: normal;
-}
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,100..900;1,100..900&display=swap");
 
 :root {
     --color-primary-dark: #1d201e;
@@ -94,7 +89,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    font-family: "SF Pro Display", sans-serif;
+    font-family: "Inter", sans-serif;
     color: var(--color-text-dark);
 }
 
@@ -108,7 +103,7 @@ body {
 
 .header {
     font-size: xxx-large;
-    font-family: "SF Pro Display", sans-serif;
+    font-family: "Inter", sans-serif;
     color: var(--color-text-dark);
     font-weight: bold;
     margin: 0px 0px -20px;
@@ -205,7 +200,7 @@ body {
     transition: max-width 0.4s ease-in-out, opacity 0.2s ease-in-out;
     white-space: nowrap;
     overflow: hidden;
-    font-family: "SF Pro Display", sans-serif;
+    font-family: "Inter", sans-serif;
     font-size: revert;
     color: var(--color-accent-light);
 }
@@ -327,7 +322,7 @@ body {
     margin-left: 40px;
     font-size: 1.1em;
     box-shadow: 4px 2px 7.5px 1px var(--color-shadow-button), -2px -2px 7.5px 3px var(--color-shadow-button-light);
-    font-family: "SF Pro Display", sans-serif;
+    font-family: "Inter", sans-serif;
 }
 
 .mcq-next-btn:hover, .slider-next-btn:hover {
@@ -693,7 +688,7 @@ body {
 #todo-title {
     align-self: flex-start;
     margin-left: 5%;
-    font-family: "SF Pro Display", sans-serif;
+    font-family: "Inter", sans-serif;
     font-size: 2rem;
     font-weight: 100;
     font-style: italic;
