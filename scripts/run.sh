@@ -23,7 +23,8 @@ if [ "$1" == "dev" ]; then
     export FLASK_APP=main.py
     export FLASK_ENV=development
     export FLASK_DEBUG=1
-    flask run --host=0.0.0.0 --port=${PORT:-5000}
+    flask run --host=127.0.0.1 --port=${PORT:-5000}
 else
+    python scripts/qr.py "$PUBLIC_URL" "${PORT:-5000}"
     waitress-serve --listen=0.0.0.0:${PORT:-5000} main:app
 fi

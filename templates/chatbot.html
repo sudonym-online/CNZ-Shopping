@@ -6,7 +6,6 @@
     <link rel="icon" href="/static/favicon.svg" type="image/svg+xml" />
     <title>CNZ Chatbot</title>
     <link rel="stylesheet" href="static/styles/style.css" />
-    <script src="https://js.puter.com/v2/"></script>
   </head>
 
   <body>
@@ -75,10 +74,11 @@
             <textarea
               id="user-input"
               type="text"
+              aria-label="Search for a product"
               placeholder="Search for a product"
             ></textarea>
           </div>
-          <button onclick="getBotResponse(event)">
+          <button type="button" aria-label="Send" onclick="submitAnswer(event)">
             <span class="send-icon">&#x25B6;</span>
           </button>
         </div>

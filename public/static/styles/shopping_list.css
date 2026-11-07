@@ -25,7 +25,7 @@
 .todo-list-grid {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    /*! gap: 20px; */
+    gap: 12px;
     padding: 20px;
     width: 90%;
     margin: 0 auto;
@@ -42,14 +42,18 @@
     font-family: "JetBrains Mono", monospace;
     border: 1px solid var(--color-border-input-light);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    height: 45px;
-    width: 347px;
+    height: auto;
+    min-height: 45px;
+    width: 100%;
+    box-sizing: border-box;
+    min-width: 0;
 }
 
 .suggested-item .item-details {
     display: flex;
     flex-grow: 1;
     align-items: center;
+    min-width: 0;
 }
 
 .suggested-item .todo-checkbox-wrapper {
@@ -63,6 +67,8 @@
     margin-bottom: 0;
     display: flex;
     flex-direction: column;
+    min-width: 0;
+    overflow-wrap: anywhere;
 }
 
 .suggested-item .item-name {
@@ -76,6 +82,7 @@
 .suggested-item .item-price {
     align-self: center;
     margin-left: 10px;
+    flex-shrink: 0;
 }
 
 .suggested-item .search-btn {
@@ -92,6 +99,7 @@
     color: var(--color-text-gray);
     padding: 0;
     margin-left: auto;
+    flex-shrink: 0;
 }
 
 .suggested-item .search-btn svg {
@@ -103,6 +111,7 @@
 .suggested-item .delete-btn {
     margin-top: 0;
     margin-left: 10px;
+    flex-shrink: 0;
 }
 
 .suggested-item .item-image-container {
@@ -135,4 +144,35 @@
     .todo-list-grid {
         grid-template-columns: 1fr;
     }
+
+    .suggested-item .item-details {
+        flex-wrap: wrap;
+        row-gap: 8px;
+    }
+
+    .suggested-item .item-text {
+        flex: 1 1 120px;
+    }
+}
+
+#list-message {
+    margin: 10px 5% 0;
+    font-size: 0.8rem;
+    font-family: "JetBrains Mono", monospace;
+    color: var(--color-text-gray);
+}
+
+#list-message:empty {
+    display: none;
+}
+
+#new-list-btn {
+    margin: 10px 0 0 5%;
+    padding: 8px 15px;
+    border: 1px solid var(--color-border-button);
+    background-color: var(--color-bg-light);
+    cursor: pointer;
+    color: var(--color-text-gray);
+    border-radius: 12px;
+    font-family: "JetBrains Mono", monospace;
 }

@@ -3,14 +3,13 @@ import os
 from dotenv import load_dotenv
 from openai import OpenAI
 
-# Load API keys from .env
 load_dotenv()
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 
-def build_prompt(event_type, rejected_items, accepted_items, count=1):
+def build_prompt(event, accepted_items, rejected_items, count=1):
     base = f"""
-You are a helpful shopping assistant. A user is preparing for an {event_type}.
+You are a helpful shopping assistant. A user is shopping for this event: {event}.
 
 Recommend {count} essential item{"s" if count > 1 else ""}.
 Do NOT include any of the following:
@@ -21,11 +20,13 @@ Respond with ONLY valid JSON, enclosed in triple backticks, like this:
 [
   {{
     "item": "Item name",
-    "reason": "Very short reason"
+    "reason": "Very short reason",
+    "price": "$10-$20"
   }}
 ]
 ```
-The 'reason' should be a very concise, 1-6 word explanation."""
+The 'reason' should be a very concise, 1-6 word explanation.
+The 'price' should be a typical price range in USD, like "$10-$20"."""
 
     return base.strip()
 
@@ -35,6 +36,7 @@ def clean_item(raw_item):
         return {
             "item": raw_item["item"].strip(),
             "reason": raw_item.get("reason", "No description provided.").strip(),
+            "price": str(raw_item.get("price") or "N/A").strip(),
         }
     except (KeyError, AttributeError):
         return None
@@ -47,40 +49,33 @@ def recommend_items(event, accepted, rejected, count=1):
         {"role": "user", "content": prompt},
     ]
 
-    try:
-        response = client.chat.completions.create(
-            model="gpt-4o",
-            messages=messages,
-            temperature=0.2,  # lower temp for consistency
-        )
-        raw = response.choices[0].message.content.strip()
+    response = client.chat.completions.create(
+        model="gpt-6.1-terra",
+        messages=messages,
+        reasoning_effort="low",
+    )
+    raw = response.choices[0].message.content.strip()
 
-        # Extract JSON if wrapped in ```
-        if "```" in raw:
-            raw = raw.split("```")[1]
-            raw = raw.replace("json", "").strip()
+    if "```" in raw:
+        raw = raw.split("```")[1]
+        raw = raw.replace("json", "").strip()
 
-        # Parse JSON
-        data = json.loads(raw)
-        if isinstance(data, dict):
-            items = [data]
-        elif isinstance(data, list):
-            items = data
-        else:
-            print("Unexpected GPT response format:", raw)
-            return []
+    data = json.loads(raw)
+    if isinstance(data, dict):
+        items = [data]
+    elif isinstance(data, list):
+        items = data
+    else:
+        raise ValueError("Unexpected GPT response format")
 
-        cleaned_items = []
-        for raw_item in items:
-            cleaned = clean_item(raw_item)
-            if cleaned and cleaned["item"] not in accepted + rejected:
-                cleaned_items.append(cleaned)
+    seen = {name.strip().lower() for name in accepted + rejected}
+    cleaned_items = []
+    for raw_item in items:
+        cleaned = clean_item(raw_item)
+        if cleaned and cleaned["item"].lower() not in seen:
+            cleaned_items.append(cleaned)
 
-        return cleaned_items
-
-    except Exception as e:
-        print("Error generating item:", e)
-        return []
+    return cleaned_items
 
 
 def recommend_next_item(event, accepted, rejected):
@@ -92,7 +87,7 @@ def recommend_next_item(event, accepted, rejected):
 
 
 def print_item(item):
-    print(f"- {item['item']}: {item['reason']}")
+    print(f"- {item['item']}: {item['reason']} ({item['price']})")
 
 
 def shopping_list_run():
@@ -102,7 +97,9 @@ def shopping_list_run():
     event = input("What event are you shopping for? (e.g. back to school): ").strip()
 
     print("\n--- Recommended Items ---")
-    new_items = recommend_items(event, accepted_items, rejected_items, count=5)
+    new_items = recommend_items(
+        event, [i["item"] for i in accepted_items], rejected_items, count=5
+    )
     if not new_items:
         print("No recommendations received.")
         return
@@ -115,7 +112,9 @@ def shopping_list_run():
         more = input("\nGenerate another item? (y/n): ").strip().lower()
         if more != "y":
             break
-        item = recommend_next_item(event, accepted_items, rejected_items)
+        item = recommend_next_item(
+            event, [i["item"] for i in accepted_items], rejected_items
+        )
         if not item:
             print("No more items generated.")
             break
