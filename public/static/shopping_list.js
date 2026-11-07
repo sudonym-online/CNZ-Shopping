@@ -154,14 +154,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
       li.innerHTML = `
                 <div class="item-details">
-                  <div class="todo-checkbox-wrapper">
+                  <label class="todo-checkbox-wrapper">
                     <span class="todo-checkbox">
                       <input type="checkbox" aria-label="Mark ${esc(item.item)} as done" ${item.completed ? "checked" : ""}>
                       <svg>
                         <use xlink:href="#todo-checkbox-symbol" class="todo-checkbox"></use>
                       </svg>
                     </span>
-                  </div>
+                  </label>
                   <div class="item-text">
                       <span class="item-name">${esc(item.item)}</span>
                       <span class="item-reason">${item.reason ? `- ${esc(item.reason)}` : ""}</span>

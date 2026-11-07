@@ -89,6 +89,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
+    height: 100dvh;
     font-family: "Inter", sans-serif;
     color: var(--color-text-dark);
 }
@@ -151,9 +152,21 @@ body {
     gap: 10px;
 }
 
-.navbar:hover {
-    width: 500px;
-    border-radius: 0px 0px 25px 25px;
+@media (hover: hover) and (min-width: 600px) {
+    .navbar:hover {
+        width: 500px;
+        border-radius: 0px 0px 25px 25px;
+    }
+
+    .navbar:hover .nav-btn {
+        padding: 8px 18px;
+        gap: 8px;
+    }
+
+    .navbar:hover .nav-btn-text {
+        max-width: 70px;
+        opacity: 1;
+    }
 }
 
 .navbar::before {
@@ -192,11 +205,6 @@ body {
     white-space: nowrap;
 }
 
-.navbar:hover .nav-btn {
-    padding: 8px 18px;
-    gap: 8px;
-}
-
 .nav-btn-text {
     display: inline-block;
     vertical-align: middle;
@@ -210,11 +218,6 @@ body {
     color: var(--color-accent-light);
 }
 
-.navbar:hover .nav-btn-text {
-    max-width: 70px;
-    opacity: 1;
-}
-
 .nav-btn.active {
     background-color: var(--color-primary-accent);
     color: var(--color-white);
@@ -226,7 +229,8 @@ body {
 
 .chat-messages {
     flex-grow: 1;
-    overflow-y: visible;
+    overflow-y: auto;
+    min-height: 0;
     display: flex;
     flex-direction: column;
     gap: 39px;
@@ -266,11 +270,9 @@ body {
     margin: 4px;
     padding: 16px 24px;
     text-decoration: inherit;
-    text-wrap: nowrap;
     transition: 0.6s ease-out;
-    white-space: nowrap;
     line-height: 1.15;
-    height: 80px;
+    min-height: 80px;
     justify-content: left;
     align-items: center;
     text-align: left;
@@ -285,6 +287,8 @@ body {
 .mcq-option-text {
     font-size: 1.2em;
     padding-left: 20px;
+    min-width: 0;
+    overflow-wrap: anywhere;
 }
 
 .mcq-option:hover {
@@ -293,6 +297,7 @@ body {
 
 .mcq-option input[type="radio"] {
     display: block;
+    flex: none;
     width: 30px;
     height: 30px;
     accent-color: var(--color-accent-yellow);
@@ -396,13 +401,15 @@ body {
 
 .question-title {
     font-size: 3em;
-    font-weight: normal;
+    font-weight: bold;
     margin-bottom: 4px;
     color: var(--color-text-darker);
+    text-align: center;
 }
 
 .question-reasoning {
-    font-size: 1em;
+    font-size: 1.5em;
+    text-align: center;
     color: var(--color-text-muted);
     margin-top: 0px;
     margin-bottom: 20px;
@@ -595,8 +602,8 @@ body {
 }
 
 .spec-item.bad-stat {
-    background-color: #a2ffaf;
-    border: #a2ffaf;
+    background-color: var(--color-bad-light);
+    border: 1px solid var(--color-bad-light);
     color: var(--color-text-dark);
 }
 
@@ -626,8 +633,8 @@ body {
 }
 
 .bad-stat .spec-indicator {
-    background-color: var(--color-success-bg-light);
-    color: var(--color-success-text);
+    background-color: var(--color-white);
+    color: var(--color-text-dark);
 }
 
 .todo-list-container {
@@ -802,10 +809,12 @@ body {
     font-weight: bold;
     margin-top: -0.5em;
     color: var(--color-text-darker);
+    text-align: center;
 }
 
 .open-ended-question-reasoning {
     font-size: 1.5em;
+    text-align: center;
     color: var(--color-text-muted);
     margin-top: 0px;
     margin-bottom: -12em;
@@ -848,6 +857,8 @@ body {
 
 .slider-input {
     appearance: none;
+    flex: 1;
+    min-width: 0;
     width: 100%;
     height: 20px;
     background: var(--color-bg-slider);
@@ -1018,15 +1029,74 @@ body {
     body:has(.compare-container) {
         height: auto;
         min-height: 100vh;
+        min-height: 100dvh;
     }
 
-    .new-comparison-btn {
-        margin-top: 64px;
+    .chat-header {
+        position: absolute;
+    }
+
+    .navbar {
+        width: fit-content;
+    }
+
+    .nav-btn {
+        min-width: 44px;
+        min-height: 44px;
+        padding: 0px;
+        justify-content: center;
+    }
+
+    .header {
+        font-size: 2rem;
+    }
+
+    .compare-container .header, .todo-list-container .header {
+        margin-bottom: 0px;
+    }
+
+    .item-input, #event-input, #user-input {
+        font-size: 16px;
+    }
+
+    .question-container {
+        width: 100%;
+    }
+
+    .question-title, .slider-question-header, .open-ended-question-title {
+        font-size: clamp(1.75rem, 8vw, 2.25rem);
+    }
+
+    .question-reasoning, .slider-question-reasoning, .open-ended-question-reasoning {
+        font-size: 1rem;
+    }
+
+    .open-ended-question-reasoning {
+        margin-bottom: 0px;
+    }
+
+    .slider-form label {
+        width: 100%;
+        flex-wrap: wrap;
+        gap: 8px 20px;
+    }
+
+    .slider-input {
+        flex: 1 1 100%;
+        order: 1;
+    }
+
+    .mcq-next-btn, .slider-next-btn {
+        align-self: stretch;
+        margin-left: 0px;
+        min-height: 48px;
     }
 
     .compare-container {
         height: auto;
         min-height: 97vh;
+        min-height: 97dvh;
+        padding-top: 100px;
         overflow-x: hidden;
     }
 
@@ -1038,6 +1108,7 @@ body {
         box-shadow: none;
         align-self: stretch;
         box-sizing: border-box;
+        border-radius: 20px;
     }
 
     body #sidebar-toggle {
@@ -1057,6 +1128,10 @@ body {
         padding: 24px;
         overflow-y: visible;
         max-width: 100%;
+    }
+
+    .specs-group {
+        font-size: 0.8em;
     }
 
     .spec-item {
@@ -1271,8 +1346,6 @@ body {
 
 /* ---- RESULTS ---- */
 .chat-messages:has(> .res-wrap) {
-    overflow-y: auto;
-    min-height: 0;
     gap: 0;
 }
 
@@ -1851,11 +1924,26 @@ body {
 
 @media (max-width: 700px) {
     .res-wrap {
-        padding: 0 0 20px;
+        --res-sh-big: rgba(3, 4, 14, 0.1) 0 6px 12px 0;
+        padding: 12px 12px 20px;
     }
 
     .res-top {
         align-items: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .res-btn {
+        padding: 12px 20px;
+    }
+
+    .res-media.res-none, .res-media.res-pending {
+        height: auto;
+        min-height: 220px;
+    }
+
+    .res-big {
+        font-size: 26px;
     }
 
     .res-top h1 {

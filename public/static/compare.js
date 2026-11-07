@@ -75,12 +75,18 @@ document.addEventListener("DOMContentLoaded", () => {
     const description = document.querySelector(".description");
     if (description) description.style.display = "none";
 
+    const recommendations = String(data.recommend ?? "")
+      .split("|")
+      .map((part) => part.trim())
+      .filter(Boolean)
+      .map((part) => `<p class="recommendations-text">${esc(part)}</p>`)
+      .join("");
     const sidebarResults = document.getElementById("sidebar-results");
     sidebarResults.innerHTML = `
       <h3 class="distinctions">Distinctions</h3>
       <p class="distinctions-text">${esc(data.distinctions)}</p>
       <h3 class="recommendations">Recommendations</h3>
-      <p class="recommendations-text">${esc(data.recommend)}</p>
+      ${recommendations}
     `;
     sidebarResults.style.transition = "transform 0.3s ease-out";
 

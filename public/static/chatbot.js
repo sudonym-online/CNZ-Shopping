@@ -367,7 +367,7 @@ const num = (s) => {
 };
 const money = (n) =>
   "$" + n.toLocaleString("en-US", { minimumFractionDigits: n % 1 ? 2 : 0, maximumFractionDigits: 2 });
-const secs = (ms) => (ms / 1000).toFixed(1) + " s";
+const secs = (ms) => (ms / 1000).toFixed(1) + " s";
 const GLYPH = { ok: "✓", warn: "!", bad: "✕", unk: "?", est: "~" };
 const MET = { yes: "ok", partly: "warn", no: "bad" };
 let S = null;
@@ -514,7 +514,7 @@ function paintStatus() {
   const found = S.items.filter((x) => x.state === "found").length;
   S.status.textContent = done < n
     ? "checking Google Shopping · " + secs(performance.now() - S.t0)
-    : n + " of " + n + " checked in " + secs(Math.max(...S.items.map((x) => x.ms))) + " · " + found + " listing" + (found === 1 ? "" : "s") + " found · " + (n - found) + " not found";
+    : found + " of " + n + " listing" + (n === 1 ? "" : "s") + " found";
 }
 
 function tick() {

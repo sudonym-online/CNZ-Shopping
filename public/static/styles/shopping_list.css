@@ -140,18 +140,123 @@
     }
 }
 
+body:has(.todo-list-container) {
+    height: auto;
+    min-height: 100vh;
+    min-height: 100dvh;
+}
+
+.todo-list-container {
+    height: auto;
+    min-height: 97vh;
+    min-height: 97dvh;
+    margin: 1.5vh 0;
+}
+
+#event-input {
+    height: 30px;
+}
+
+@media (hover: none) {
+    .suggested-item:hover {
+        transform: none;
+    }
+}
+
 @media (max-width: 768px) {
     .todo-list-grid {
         grid-template-columns: 1fr;
     }
 
+    .todo-list-container .header {
+        margin: 0 0 8px;
+        text-align: center;
+        overflow-wrap: anywhere;
+    }
+
+    .todo-list-container .description {
+        margin-bottom: 24px;
+        text-align: center;
+    }
+
+    .shopping-list-input {
+        width: 100%;
+        max-width: 420px;
+    }
+
+    #event-input {
+        flex: 1;
+        min-width: 0;
+        width: auto;
+        max-height: none;
+        height: 44px;
+        box-sizing: border-box;
+    }
+
     .suggested-item .item-details {
-        flex-wrap: wrap;
-        row-gap: 8px;
+        display: grid;
+        grid-template-columns: auto 1fr auto auto;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .suggested-item .todo-checkbox-wrapper {
+        grid-row: 1 / 3;
+        align-self: start;
+        margin-right: 0;
+        padding: 11px;
     }
 
     .suggested-item .item-text {
-        flex: 1 1 120px;
+        grid-column: 2 / 5;
+    }
+
+    .suggested-item .item-price {
+        grid-column: 2;
+        justify-self: start;
+        margin-left: 0;
+    }
+
+    .suggested-item .search-btn {
+        grid-column: 3;
+        width: 44px;
+        height: 44px;
+        margin-left: 0;
+    }
+
+    .suggested-item .delete-btn {
+        grid-column: 4;
+        min-width: 44px;
+        min-height: 44px;
+        margin-left: 0;
+        font-size: 1.4em;
+    }
+
+    #todo-title {
+        align-self: stretch;
+        margin: 0 0 12px;
+        padding: 20px;
+        max-width: none;
+        font-size: 1.4rem;
+        overflow-wrap: anywhere;
+    }
+
+    #todo-items, #add-item-btn {
+        width: 100%;
+    }
+
+    #add-item-btn {
+        margin-top: 12px;
+    }
+
+    #list-message {
+        margin: 12px 0 0;
+        align-self: stretch;
+    }
+
+    #new-list-btn {
+        margin: 12px 0 0;
+        min-height: 44px;
     }
 }
 
